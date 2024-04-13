@@ -1,0 +1,28 @@
+{% extends "main/base.html" %}
+{% block content %}
+{% for ques in questions %}
+<div class="card bg-light mt-2">
+    <div class="card-body">
+        <h3 class="card-title"> <a href="{% url 'question' ques.id %}">{{ ques.title }}</a></h3>
+        <!-- Check if question has an image -->
+        {% if ques.image %}
+        <img src="{{ ques.image.url }}" alt="Question Image" class="img-fluid mb-2">
+        {% endif %}
+        <h6 class="card-subtitle mb-2 text-muted">Posted by
+            <strong>{{ ques.author.username|capfirst }}</strong> on
+            <strong>{{ ques.asked_on|date:"F d, Y" }}</strong>
+        </h6>
+        <p class="card-text">{{ ques.description }}</p>
+        <div>
+            <p class="card-text">Likes: {{ ques.votes.count }}</p>
+            {% if ques.user_liked %}
+            <a href="{% url 'upvote-question' ques.id %}" class="btn btn-danger mt-2">Down Vote</a>
+            {% else %}
+            <a href="{% url 'upvote-question' ques.id %}" class="btn btn-success mt-2">Up Vote</a>
+            {% endif %}
+            <a href="{% url 'answer' ques.id %}" class="btn btn-secondary mt-2">Answer</a>
+        </div>
+    </div>
+</div>
+{% endfor %}
+{% endblock content %}
