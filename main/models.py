@@ -16,7 +16,7 @@ class Question(models.Model):
 
 class Answer(models.Model):
     question = models.ForeignKey(Question, on_delete=models.CASCADE)
-    answer = models.TextField()
+    text = models.TextField()
     answered_by = models.ForeignKey(User, related_name="answers", on_delete=models.CASCADE)
     answered_on = models.DateTimeField(auto_now_add=True)
     image = models.ImageField(upload_to='answer_images/', blank=True, null=True) # New field for image
