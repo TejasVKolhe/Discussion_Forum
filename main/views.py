@@ -16,8 +16,6 @@ def home(request):
         question.user_liked = question.votes.filter(id=request.user.id).exists()
     return render(request, "main/home.html", {"questions": questions})
 
-def about(request):
-    return render(request, "main/about.html")
 
 def register(request):
     if request.method == "POST":
@@ -160,3 +158,6 @@ def upvote_answer(request, aid):
 @login_required
 def profile(request):
     return render(request, "main/profile.html")
+
+def about(request):
+    return render(request, "main/about.html")

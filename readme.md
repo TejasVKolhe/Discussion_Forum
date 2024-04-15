@@ -1,17 +1,23 @@
 
-# DiscussionForum Clone
+# DiscussionForum - RPPOOP Project
 
-This project is allows users to ask questions, provide answers, and engage in discussions on various topics. Users can create profiles, follow topics, and vote on the best answers.
+## Overview
+The Discussion Forum is a web application built using the Django framework. It provides a platform for users to engage in discussions by posting questions and answers on various topics.
 
-## Set Up
+## Features
+User Registration and Authentication: Users can register accounts and authenticate to participate in discussions.
+Posting Questions: Registered users can post questions on the forum.
+Posting Answers: Users can provide answers to questions posted by others.
+Voting System: Users can upvote questions and answers they find helpful.
+User Profiles: Each user has a profile page displaying their activity and contributions to the forum.
+Admin Interface: Administrators can manage users, questions, and answers through the Django admin interface.
 
-Clone the Repository and in the root of the project(i.e "DiscussionForum/" )
-run  
+## Usage
+Navigate to the home page to view the list of questions.
+Click on a question to view its details and answers.
+Use the navigation links to register/login, post questions, or access user profiles.
+Administrators can access the admin interface at http://localhost:8000/admin/ to manage users, questions, and answers.
 
-### Install Requirements
-`pip install -r requirements.txt`
-
-### Run Server
-To run the app run the following command in the root directory
-
-`python3 manage.py runserver`
+## Credits : 
+1. Kaustubh Kharat [612203091]
+2. Tejas Kolhe [612203097]

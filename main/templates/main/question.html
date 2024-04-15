@@ -1,28 +1,70 @@
-{% extends "main/base.html" %}
-{% block content %}
-{% for ques in questions %}
+{%extends "main/base.html"%}
+{% load crispy_forms_tags %}
+{% block content%}
+
+
 <div class="card bg-light mt-2">
     <div class="card-body">
-        <h3 class="card-title"> <a href="{% url 'question' ques.id %}">{{ ques.title }}</a></h3>
-        <!-- Display Image -->
-        {% if ques.image %}
-        <img src="{{ ques.image.url }}" alt="Question Image" class="img-fluid mb-2">
-        {% endif %}
-        <h6 class="card-subtitle mb-2 text-muted">Posted by
-            <strong>{{ ques.author.username|capfirst }}</strong> on
-            <stro> {{ ques.asked_on|date:"F d,Y" }} </stro    ng>
-        </h6>
-        <p class="card-text">{{ ques.description }}</p>
-        <div>
-            <p class="card-text">Likes: {{ ques.votes.count }}</p>
-            {% if ques.user_liked %}
-            <a href="{% url 'upvote-question' ques.id %}" class="btn btn-danger mt-2">Down Vote</a>
-            {% else %}
-            <a href="{% url 'upvote-question' ques.id %}" class="btn btn-success mt-2">Up Vote</a>
-            {% endif %}
-            <a href="{% url 'answer' ques.id %}" class="btn btn-secondary mt-2">Answer</a>
-        </div>
+        <h3 class="card-title">{{question.title}}</h>
+            <h6 class="card-subtitle mb-2 text-muted">Posted by
+                <strong>{{ question.author.username|capfirst }}</strong> on
+                <strong>{{ question.asked_on|date:"F d,Y" }}</strong>
+            </h6>
+            <p class="card-text">{{ question.description }}</p>
+            <div>
+                <p class="card-text">Likes: {{ question.votes.count }}</p>
+                {% if question.user_liked %}
+                <form action="{%url 'upvote-question' question.id %}">
+                    {% csrf_token %}
+                    <input type="hidden" name="redirect_to" value={{request.path}}>
+                    <button type="submit" class="btn btn-danger">Down Vote</button>
+                </form>
+                {%else%}
+                <form action="{%url 'upvote-question' question.id %}">
+                    {% csrf_token %}
+                    <input type="hidden" name="redirect_to" value={{request.path}}>
+                    <button type="submit" class="btn btn-success">Up Vote</button>
+                </form>
+                {%endif%}
+                <a href="{%url 'answer' question.id%}" class="btn btn-secondary mt-2">Answer</a>
+            </div>
     </div>
 </div>
-{% endfor %}
-{% endblock content %}
+
+<div class="card mt-3">
+    <div class="card-body">
+        <h5 class="card-title">Answers</h5>
+        {%if answers%}
+        {% for ans in answers %}
+        <div class="card bg-light mb-3">
+            <div class="card-body">
+                <h6 class="mt-0">Answered By: <strong> {{ ans.answered_by.username|capfirst }} </strong></h6>
+                <p>{{ans.answered_on|date:"F d,Y"}}</p>
+                <p>{{ans.answer}}</p>
+                <p class="card-text">Likes: {{ ans.votes.count }}</p>
+
+                {% if ans.user_liked %}
+                <form action="{%url 'upvote-answer' ans.id %}">
+                    <input type="hidden" name="redirect_to" value={{request.path}}>
+                    <button type="submit" class="btn btn-danger">Down Voke</button>
+                </form>
+                {%else%}
+
+
+                <form action="{%url 'upvote-answer' ans.id %}">
+                    <input type="hidden" name="redirect_to" value={{request.path}}>
+                    <button type="submit" class="btn btn-success">Up Voke</button>
+                </form>
+                {%endif%}
+            </div>
+        </div>
+        {% endfor %}
+        {%else%}
+        <div>No Answers Yet</div>
+        {%endif%}
+
+    </div>
+</div>
+
+
+{%endblock content%}

@@ -9,12 +9,12 @@ from .views import (
     upvote_question,
     upvote_answer,
     profile,
-    about,
+    about
 )
 
 urlpatterns = [
     path("", home, name="home"),
-    path("about/", about, name = "about"),
+    path("about/", about, name="about"),
     path("register/", register, name="register"),
     path(
         "login/",
